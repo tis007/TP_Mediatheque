@@ -8,13 +8,22 @@ public class Book extends Item {
 		this.author = author;
 	}
 
+	@Override
+	public void accept(ItemVisitor v) {
+		v.visit(this);
+	}
+
+
+
+
 	public String getAuthor() {
 		return author;
 	}
 
 	public void setAuthor(String author) {
 		this.author = author;
-	}	
+	}
+
 
 	public void print() {
 		System.out.println(this);
