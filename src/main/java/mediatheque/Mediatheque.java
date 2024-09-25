@@ -5,29 +5,28 @@ import java.util.List;
 
 public class Mediatheque {
     private final List<Item> items = new LinkedList<>();
+    private final PrintCatalogVisitor printCatalogVisitor = new PrintCatalogVisitor();
+    private final PrintOnlyBooksVisitor printOnlyBooksVisitor = new PrintOnlyBooksVisitor();
+    private final PrintOnlyCDsVisitor printOnlyCDsVisitor = new PrintOnlyCDsVisitor();
 
     public void addItem(Item i) {
         items.add(i);
     }
 
     public void printCatalog() {
-        PrintCatalogVisitor v = new PrintCatalogVisitor();
-        for (Item i : items)
-            i.accept(v);
+        useVisitor(printCatalogVisitor);
     }
 
     public void printOnlyBooks() {
-	    PrintOnlyBooksVisitor v = new PrintOnlyBooksVisitor();
-
-        for (Item i : items)
-            i.accept(v);
+        useVisitor(printOnlyBooksVisitor);
     }
 
     public void printOnlyCDs() {
-        PrintOnlyCDsVisitor v = new PrintOnlyCDsVisitor();
+        useVisitor(printOnlyCDsVisitor);
+    }
 
-        for (Item i : items)
-            i.accept(v);
+    public void useVisitor(ItemVisitor v) {
+        items.forEach(i -> i.accept(v));
     }
 
 }
